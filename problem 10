@@ -1,0 +1,49 @@
+/*The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
+
+Find the sum of all the primes below two million.
+*/
+#include<iostream>
+#include<cmath>
+#include<vector>
+#include <ctime>
+
+using namespace std;
+
+bool checkprime(int x, const vector<int>& primes){
+  for(int prime: primes){
+    if (x % prime == 0){
+      return false;
+    }
+    if(prime > pow(x, 0.5)){
+      return true;
+    }
+  }
+  return true;
+}
+
+vector<int> all_primes(int upper_bound){
+  vector<int> primes = {2};
+  for(int i = 3; i <= upper_bound; i+=2){
+    if(checkprime(i, primes)){
+      primes.push_back(i);
+    }
+  }
+  return primes;
+}
+
+int main() {
+  std::time_t t0 = std::time(nullptr);
+
+  const int upper_bound = 2000000;
+  long long sum = 0;
+
+  for(auto prime : all_primes(upper_bound)){
+    sum += prime;
+  }
+
+  cout << sum << endl;
+  std::time_t t1 = std::time(nullptr);
+  cout << "time: " << t1 - t0;
+
+  return 0;
+}
