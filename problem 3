@@ -1,0 +1,34 @@
+/*The prime factors of 13195  are 5, 7, 13 and 29.
+
+What is the largest prime factor of the number 600851475143 ?
+*/
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+vector<int> PrimeFactors(long n){ 
+  int k = 2;
+  vector<int> result;
+  while(k < n){
+    if(n % k == 0){
+      result.push_back(k);
+      n = n / k;
+    }else{
+      k++;
+    }
+  }
+  result.push_back(n);
+  return result;
+}
+
+int main(){
+  long n = 600851475143;
+  vector<int> result = PrimeFactors(8 * 27 * 5 * n);
+  //cout << result.back();
+  for(int i = 0; i < result.size(); i++){
+    cout << result[i] << endl;
+  }
+  return 0;
+}
+
