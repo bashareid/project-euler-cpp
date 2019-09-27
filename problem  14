@@ -1,0 +1,67 @@
+/*The following iterative sequence is defined for the set of positive integers:
+
+n → n/2 (n is even)
+n → 3n + 1 (n is odd)
+
+Using the rule above and starting with 13, we generate the following sequence:
+
+13 → 40 → 20 → 10 → 5 → 16 → 8 → 4 → 2 → 1
+It can be seen that this sequence (starting at 13 and finishing at 1) contains 10 terms. Although it has not been proved yet (Collatz Problem), it is thought that all starting numbers finish at 1.
+
+Which starting number, under one million, produces the longest chain?
+
+NOTE: Once the chain starts the terms are allowed to go above one million.
+
+*/
+#include<iostream>
+#include<vector>
+#include<map>
+#include<algorithm>
+#include<ctime>
+#include<sstream>
+using namespace std;
+
+// this function  return length of  chain 
+
+int len(int x, std::map<int,int> *name_map){
+ 
+ int counter = 1;
+ int temp = x ;
+ while(x > 1){
+    auto it = name_map -> find(x);
+    if (it != name_map -> end()){
+      counter += name_map -> at(x);
+      break;
+    }
+
+    if(x % 2 == 0){
+     x = x /2;
+    }
+    else{
+     x = (3 * x) + 1;
+    }
+    counter += 1;
+  }
+  name_map -> insert(std::pair<int, int>(temp, counter));
+  return counter;  
+  
+}
+// we compare all chian and choose the gratest one 
+
+int main(){
+
+  std::map<int,int> name_map;
+  cout << len(13, &name_map) << endl;
+  cout << len(40, &name_map) << endl;
+  cout << len(20, &name_map) << endl;
+  cout << len(10, &name_map) << endl;
+  cout << len(4, &name_map) << endl;
+  vector<pair<int, int>> solutions;
+
+  for(long num = 1; num < 1000000; num++){
+    solutions.push_back(pair<int, int>(len(num, &name_map), num));
+  }
+  auto iter = std::max_element(solutions.begin(), solutions.end());
+  cout << "max: " << iter -> first << "\t" << iter -> second << endl;
+  return 0;
+}
