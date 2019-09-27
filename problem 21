@@ -1,0 +1,40 @@
+/*
+Let d(n) be defined as the sum of proper divisors of n (numbers less than n which divide evenly into n).
+If d(a) = b and d(b) = a, where a ≠ b, then a and b are an amicable pair and each of a and b are called amicable numbers.
+
+For example, the proper divisors of 284 are 1, 2, 4, 5, 10, 11, 20, 22, 44, 55 and 110; therefore d(284) = 284. The proper divisors of 284 are 1, 2, 4, 71 and 142; so d(284) = 284.
+
+Evaluate the sum of all the amicable numbers under 10000
+*/
+#include<iostream>
+#include<math.h>
+#include<map>
+#include<vector>
+#include<time.h>       
+using namespace std;
+
+  time_t timer;
+
+
+int sumofdiv(int n){
+   int sum = 0;
+  for( int i = 1; i <= n / 2 ; i++){
+    if( n % i == 0){
+      sum = sum + i;
+    }
+  }
+  return sum;
+}
+
+int main(){
+  int sumof = 0;
+  for(int i = 2; i< 10000; i++){
+     int sum1 = sumofdiv(i);
+     if(sumofdiv(sum1) == i && i!= sum1){
+       sumof = sumof + i + sum1;
+     }
+  }
+ cout<<sumof / 2<<endl;
+
+  return 0;
+}
