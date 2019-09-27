@@ -1,0 +1,81 @@
+/*
+A palindromic number reads the same both ways. The largest palindrome made from the x of two 2-digit numbers is 9009 = 91 × 99.
+
+Find the largest palindrome made from the x of two 3-digit numbers.
+*/
+
+#include<iostream>
+#include<string>
+#include<vector>
+#include <algorithm>    // std::reverse
+
+
+using namespace std;
+
+bool is_palindrome(int x){
+  string num = std::to_string(x);
+  std::reverse(num.begin(), num.end());
+  if(num != to_string(x)){
+    return false;
+  }
+  return true;
+}
+
+bool num(int x){
+    int a,b,c,d,e,f;
+	if(x<99999){
+
+		a = x%10;
+		b = (x%100 - a)/10;
+		c= (x%1000 - b)/100;
+		d = (x%10000 -c)/1000;
+		e = (x%100000 - d)/10000;
+
+		if((a == e) && (b == d)){
+			return true;
+		}else{
+			return false;
+		}
+
+	}else{
+
+		a = x%10;
+		b = (x%100 - a)/10;
+		c = (x%1000 - b)/100;
+		d = (x%10000 - c)/1000;
+		e= (x%100000 - d)/10000;
+		f = (x%1000000 -e)/100000;
+
+		if((a == f) && (b == e) && (c == d)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+}
+
+/*int find_max(const vector<int> nums){
+  int max = nums[0];
+  for(int num : nums){
+    if(num > max){
+      max = num;
+    }
+  }
+  return max;
+}
+*/
+
+int main(){
+  vector<int> y;
+  for( int i=100; i < 999; i++){
+    for(int k=100; k < 999; k++){
+      int j = k*i;
+      if(is_palindrome(k*i)){
+        y.push_back(j);
+      }
+    }
+  }
+
+  cout << *std::max_element(y.begin(), y.end()) << endl;
+  return 0;
+}
