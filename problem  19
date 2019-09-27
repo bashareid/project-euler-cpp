@@ -1,0 +1,52 @@
+/*You are given the following information, but you may prefer to do some research for yourself.
+
+1 Jan 1900 was a Monday.
+Thirty days has September,
+April, June and November.
+All the rest have thirty-one,
+Saving February alone,
+Which has twenty-eight, rain or shine.
+And on leap years, twenty-nine.
+A leap year occurs on any year evenly divisible by 4, but not on a century unless it is divisible by 400.
+How many Sundays fell on the first of the month during the twentieth century (1 Jan 1901 to 31 Dec 2000)?
+*/
+#include <iostream>
+#include<string>
+#include<math.h>
+using namespace std;
+
+
+// check leap year
+bool checkleap(int years){
+ if(years % 4 == 0  && years % 400 != 0){
+    return true ;
+ }
+ return false;
+}
+
+
+int main(){
+int sunday = 0;
+int weekday = 2; // first day we start with is Tuesday
+int counter = 0;
+int month_len [13] = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+  for(int years = 1901; years  < 2001; years++){
+    if(checkleap(years)){
+      month_len[2] = 29;
+    }
+    else{
+      month_len[2] = 28;
+    }
+    for(int months = 1; months <= 12; months++){
+       for(int days = 1; days <= month_len[months]; days++){
+          weekday = weekday % 7;
+          if(weekday == sunday && days == 1){
+           counter = counter + 1;
+          }
+          weekday++;
+       }
+     }
+    }
+  cout << counter <<endl;
+  return 0;
+}  
