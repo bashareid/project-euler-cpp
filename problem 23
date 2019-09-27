@@ -1,0 +1,64 @@
+/*A perfect number is a number for which the sum of its proper divisors is exactly equal to the number. For example, the sum of the proper divisors of 28 would be 1 + 2 + 4 + 7 + 14 = 28, which means that 28 is a perfect number.
+
+A number n is called deficient if the sum of its proper divisors is less than n and it is called abundant if this sum exceeds n.
+
+As 12 is the smallest abundant number, 1 + 2 + 3 + 4 + 6 = 16, the smallest number that can be written as the sum of two abundant numbers is 24. By mathematical analysis, it can be shown that all integers greater than 28123 can be written as the sum of two abundant numbers. However, this upper limit cannot be reduced any further by analysis even though it is known that the greatest number that cannot be expressed as the sum of two abundant numbers is less than this limit.
+
+Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
+*/
+
+#include <iostream>
+#include<vector>
+#include<algorithm>
+#include<math.h>
+#include<set>
+using namespace std;
+// this function to check if the number abundant ot not 
+bool check_abundant(int num){
+ int sum_of_div = 1;
+  for(int div = 2; div <= sqrt(num); div++){
+   if(num % div == 0){
+      sum_of_div += div;
+     if(div != num / div){
+       sum_of_div += num / div ;
+      }    
+    }
+  }
+  if(sum_of_div > num){
+    return true;
+  }
+ return false;
+}
+
+
+int main(){
+
+
+  int sumof = 0;
+  int start = 12;
+  int end = 28124;
+  vector<int> not_abundant;
+  vector<int> abundant;
+  for(int num = start; num < end; num++){
+   if(check_abundant(num)){
+      abundant.push_back(num);
+    }
+  }
+
+  for(int num = 0; num < end; num++){
+  not_abundant.push_back(num);
+  }
+
+ for(int i = 0; i < abundant.size(); i++){
+   for(int j = i; j < abundant.size(); j++){
+     if(abundant[i] + abundant[j] < end){
+       not_abundant[abundant[i] + abundant[j]] = 0;
+      }
+    }
+  }
+  for(int n  : not_abundant){
+   sumof += n;
+  }
+  cout << sumof <<endl;
+ return 0;
+}
