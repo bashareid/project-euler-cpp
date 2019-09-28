@@ -1,0 +1,61 @@
+/*
+The number 3797 has an interesting property. Being prime itself, it is possible to continuously remove digits from left to right, and remain prime at each stage: 3797, 797, 97, and 7. Similarly we can work from right to left: 3797, 379, 37, and 3.
+
+Find the sum of the only eleven primes that are both truncatable from left to right and right to left.
+
+NOTE: 2, 3, 5, and 7 are not considered to be truncatable primes.
+*/
+#include<iostream>
+#include<math.h>
+#include<string>
+#include<set>
+using namespace std;
+
+
+int main()
+{
+   int last_num = 1000000;
+   
+  set <int> primes = {2, 3, 5, 7};
+ 
+  int sum = 0;
+  for (int i = 11; i < last_num; i += 2)
+  {
+    bool check_prime = true;
+    for(int num = 2; num < sqrt(i) + 1; num++){
+      if(i % num ==0){
+        check_prime = false;
+        break;
+      }
+    }
+
+    if (!check_prime){
+      continue;
+    }
+    primes.insert(i);
+
+    int  right = i;
+    while (right > 0 && primes.count(right) != 0)
+      right /= 10;
+    if (right != 0)
+      continue;
+
+    int  left = i;
+    int shift = 1;
+    while (left >= shift * 10)
+      shift *= 10;
+       while (left > 0 && primes.count(left) != 0)
+    {
+      left %= shift;
+      shift /= 10;
+    }
+    if (left != 0)
+      continue;
+
+    sum += i;
+    cout << i<< endl;
+  }
+
+ cout << sum << endl;
+  return 0;
+}
