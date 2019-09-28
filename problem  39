@@ -1,0 +1,47 @@
+/*f p is the perimeter of a right angle triangle with integral length sides, {a,b,c}, there are exactly three solutions for p = 120.
+
+{20,48,52}, {24,45,51}, {30,40,50}
+
+For which value of p ≤ 1000, is the number of solutions maximised?
+*/
+#include<iostream>
+#include<cmath>
+#include<algorithm> 
+#include<cstring>
+#include<vector>
+#include<map>
+using namespace std;
+
+void sides_less_than_1000(double side_3, int perimeter, map<int, int> & solutions){
+   if (side_3 == int(side_3) && perimeter < 1000){
+     solutions[perimeter] += 1;
+     //cout << solutions[perimeter] <<endl;
+   }
+}
+
+void fill_zeros(map<int, int> &solutions){
+  for(int i = 0; i < 1000; i++){
+    solutions.insert(pair<int,int>(i,0));
+  }
+}
+
+int main() {
+  map<int, int> solutions;
+  fill_zeros(solutions);
+  for(int side_1 = 1; side_1 < 1000; side_1++){
+    for(int side_2 = side_1 + 1; side_2 < 1000; side_2++){
+      double side_3 = pow(pow(side_2, 2) + pow(side_1, 2) , 0.5);
+      int perimeter = side_3 + side_2 + side_1;
+      sides_less_than_1000(side_3, perimeter, solutions);
+    }
+  }
+  int max_1 = 1, max_2;
+  for(int i = 0; i < solutions.size(); i++){
+    if(solutions[i] > max_1){
+      max_1 = solutions[i];
+      max_2 = i;
+    }
+  }
+  cout << max_1 << " : " << max_2 << endl;
+   return 0;
+}
