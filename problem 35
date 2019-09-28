@@ -1,0 +1,56 @@
+/*e number, 197, is called a circular prime because all rotations of the digits: 197, 971, and 719, are themselves prime.
+
+There are thirteen such primes below 100: 2, 3, 5, 7, 11, 13, 17, 31, 37, 71, 73, 79, and 97.
+
+How many circular primes are there below one million?
+*/
+#include <iostream>
+#include<math.h>
+#include<string>
+#include <algorithm> 
+#include<vector>
+using namespace std;
+
+bool prime(int num){
+  for(int i = 2; i <= pow(num, .5); i++)
+  if(num % i == 0){
+    return false;
+  }
+  return true;
+}
+
+int swap(vector<int> primes){
+  int counter = 4;
+  for(auto n : primes){
+    int num1 = n;
+   int shift = 1;
+   while(n > shift * 10){
+     shift = shift * 10;
+   }
+   do{
+      int first_digit = num1 % 10;
+      num1 = num1 / 10;
+      num1 += first_digit * shift;
+      if(!prime(num1)){
+        break;
+      } 
+    }while(num1 != n);
+    if(num1 == n){
+     counter++;
+    }
+  }
+ return counter;
+}
+
+int main() {
+ vector<int> primes;
+ for(int i = 11; i < 1000000; i+= 2){
+   if(prime(i)){
+     primes.push_back(i);
+    }
+  }
+  cout << swap(primes) << endl;
+ // cout << counter << endl;
+ //cout << prime(97) << endl;
+ return 0;
+}
