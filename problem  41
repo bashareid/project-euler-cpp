@@ -1,0 +1,37 @@
+/*
+We shall say that an n-digit number is pandigital if it makes use of all the digits 1 to n exactly once. For example, 2143 is a 4-digit pandigital and is also prime.
+
+What is the largest n-digit pandigital prime that exists?
+*/
+
+#include <iostream>
+#include<math.h>
+#include<vector>
+#include <algorithm>  
+#include<set>
+using namespace std;
+
+bool is_prime(int num){
+  if (num % 2 == 0){
+    return false;
+  }
+ for(int i = 3; i <= ceil(sqrt(num)); i+= 2){
+   if(num % i == 0){
+     return false;
+   }
+ }
+ return true;
+}
+
+int main() {
+  vector<int> primes;
+  string str = "1234567";
+ while( std::next_permutation(str.begin() , str.end()) ){
+   int convert = stoi(str);
+   if(is_prime(convert)){
+     primes.push_back(convert);
+   }
+  }
+  cout << primes[primes.size() - 1];
+ return 0;
+}
