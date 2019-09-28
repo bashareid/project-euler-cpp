@@ -1,0 +1,58 @@
+/*
+We shall say that an n-digit number is pandigital if it makes use of all the digits 1 to n exactly once; for example, the 5-digit number, 15234, is 1 through 5 pandigital.
+
+The product 7254 is unusual, as the identity, 39 × 186 = 7254, containing multiplicand, multiplier, and product is 1 through 9 pandigital.
+
+Find the sum of all products whose multiplicand/multiplier/product identity can be written as a 1 through 9 pandigital.
+
+HINT: Some products can be obtained in more than one way so be sure to only include it once in your sum.
+*/
+#include <iostream>
+#include<vector>
+#include<string>
+#include<set>
+#include<algorithm>
+using namespace std;
+
+
+int main() {
+  int x , y , z;
+  int sum = 0;
+  set<int> total;
+  vector<int> numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+  do{
+     for(int i = 1; i < 9; i++){
+       for(int j = 1; j < 9 - i; j++){
+         int rem_len = 9 - i - j;
+         if(rem_len < i || rem_len  < j){
+           break;
+         }
+         int pos = 0;
+         int first_product = 0;
+         for(x = 0; x < i; x++){
+           first_product *= 10;
+           first_product += numbers[pos++];
+         } 
+         int second_product = 0;
+         for(y = 0; y < j; y++){
+             second_product *= 10;
+             second_product += numbers[pos++];
+         }
+         int last_product = 0;
+         for(z = 0; z < rem_len; z++){
+           last_product *= 10;
+           last_product += numbers[pos++];
+         }
+         if(first_product * second_product  == last_product){
+           total.insert(last_product);
+         }
+       }
+     }
+  }
+ while(std::next_permutation(numbers.begin() , numbers.end()));
+ for(int n : total){
+   sum += n;
+ }
+ cout << sum <<endl;
+ return 0;
+}
