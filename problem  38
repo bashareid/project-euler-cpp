@@ -1,0 +1,53 @@
+/*
+Take the number 192 and multiply it by each of 1, 2, and 3:
+
+192 × 1 = 192
+192 × 2 = 384
+192 × 3 = 576
+By concatenating each product we get the 1 to 9 pandigital, 192384576. We will call 192384576 the concatenated product of 192 and (1,2,3)
+
+The same can be achieved by starting with 9 and multiplying by 1, 2, 3, 4, and 5, giving the pandigital, 918273645, which is the concatenated product of 9 and (1,2,3,4,5).
+
+What is the largest 1 to 9 pandigital 9-digit number that can be formed as the concatenated product of an integer with (1,2, ... , n) where n > 1?
+*/
+#include <iostream>
+#include<string>
+#include <algorithm> 
+#include<sstream>
+#include <bits/stdc++.h> 
+
+using namespace std;
+
+void check_pandigital(int num){
+  char perfect_pandigital[9] = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
+  string final_number = to_string(num * 1);
+
+  if (num < 10000){
+
+    for(int j = 2; j < 3; j++){
+     final_number += to_string(num * j);
+    }
+
+    int size = final_number.size();
+    char nums[size];
+    strcpy(nums , final_number.c_str()); 
+    std::sort(nums, nums + size); 
+    bool check = true;
+    for(int k = 0; k < 9; k++){
+      if(nums[k] != perfect_pandigital[k]){
+       check = false;
+      }
+    }
+    if (check){
+      cout << num << final_number << endl;
+    }
+  }
+  
+}
+
+int main() {
+ for(int i = 9000; i  < 10000; i++){
+ check_pandigital(i);
+ }
+ return 0;
+}
