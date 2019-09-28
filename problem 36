@@ -1,0 +1,70 @@
+/*
+The decimal number, 585 = 10010010012 (binary), is palindromic in both bases.
+
+Find the sum of all numbers, less than one million, which are palindromic in base 10 and base 2.
+
+(Please note that the palindromic number, in either base, may not include leading zeros.)
+*/
+#include <iostream>
+#include<string>
+#include<vector>
+#include <cmath>
+
+using namespace std;
+
+void convert_to_binary(int n , vector<int> &binary){
+  if(n / 2 != 0){
+    convert_to_binary(n / 2 , binary);
+  }
+  binary.push_back(n % 2);
+}
+
+ bool pal(int num){
+  string digit = to_string(num);
+  if(digit.size() == 1){
+    return true;
+  }
+  if(digit.size() == 2 && digit[0] == digit[1]){
+    return true;
+  }
+  if(digit.size() == 3 && digit[0] == digit[2]){
+    return true;
+  }
+  if(digit.size() == 4 && digit[0] == digit[3] && digit[1] == digit[2]){
+    return true;
+  }
+  if(digit.size() == 5 && digit[0] == digit[4] && digit[1] == digit[3]){
+    return true;
+  }
+ return false;
+ }
+
+ int pal_binary(vector<int> &binary){
+   bool flag = true;
+   int n = binary.size() - 1;
+   for(int i = 0; i < floor(binary.size() / 2); i++){
+     if(binary[i] != binary[n - i]){
+       flag = false;
+     }
+   }
+   binary.clear();
+   return flag;
+ }
+
+int main(){
+ vector<int> binary;
+  for(int i = 10; i < 1000000; i++){
+    if(pal(i)){
+      convert_to_binary(i , binary);
+      if(pal_binary(binary)){
+        cout << i << endl;
+      }
+    }
+  }
+  //cout << pal_binary(binary);
+  //for(int n : binary){
+    //cout << n << endl;
+  //}
+ 
+  return 0;
+}
